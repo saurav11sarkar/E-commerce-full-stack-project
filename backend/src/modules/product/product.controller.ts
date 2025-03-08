@@ -14,7 +14,7 @@ const getAllproduct = catchAsycn(async (req, res) => {
 
 const singleProduct = catchAsycn(async (req, res) => {
   const result = await productsService.singleProduct(req.params.id);
-  sendResponse(res, 200, "", result);
+  sendResponse(res, 200, "Get single id succeffully", result);
 });
 
 const updateProduct = catchAsycn(async (req, res) => {
@@ -22,9 +22,21 @@ const updateProduct = catchAsycn(async (req, res) => {
   sendResponse(res, 200, "product is updated successfully", result);
 });
 
+const deletedProduct = catchAsycn(async (req, res) => {
+  const result = await productsService.deletedProduct(req.params.id);
+  sendResponse(res, 203, "product deleted is successfully", result);
+});
+
+const reletedProduct = catchAsycn(async (req, res) => {
+  const result = await productsService.reletedProduct(req.params.id);
+  sendResponse(res, 200, "This releted product", result);
+});
+
 export const productController = {
   createProduct,
   getAllproduct,
   singleProduct,
   updateProduct,
+  deletedProduct,
+  reletedProduct,
 };

@@ -34,11 +34,14 @@ const singleProduct = async (id: string) => {
     "author",
     "email username"
   );
-  if (!result) throw new Error("Product is not found");
-  const reviews = await Review.find({ id }).populate(
+  if (!result) throw new Error("Product not found");
+
+  // FIX: Use `productId` instead of `id` for review lookup
+  const reviews = await Review.find({ productId: id }).populate(
     "userId",
     "username email"
   );
+
   return { result, reviews };
 };
 
@@ -48,9 +51,40 @@ const updateProduct = async (id: string, payload: Partial<IProduct>) => {
   return result;
 };
 
+const deletedProduct = async (id: string) => {
+  const result = await Product.findByIdAndDelete(id);
+  if (!result) throw new Error("Not updated this product");
+  await Review.deleteMany({ productId: id });
+  return result;
+};
+
+const reletedProduct = async (id: string): Promise<IProduct[]> => {
+  if (!id) throw new Error("Product ID is required");
+
+  const product = await Product.findById(id);
+  if (!product) throw new Error("Product not found");
+
+  const titleRegex = new RegExp(
+    product.name
+      .split(" ")
+      .filter((word) => word.length > 1)
+      .join("|"),
+    "i"
+  );
+
+  const relatedProducts = await Product.find({
+    _id: { $ne: id },
+    $or: [{ name: { $regex: titleRegex } }, { category: product.category }],
+  });
+
+  return relatedProducts;
+};
+
 export const productsService = {
   createProduct,
   getAllproduct,
   singleProduct,
   updateProduct,
+  deletedProduct,
+  reletedProduct,
 };

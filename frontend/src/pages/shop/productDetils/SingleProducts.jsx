@@ -4,7 +4,7 @@ import RattingStars from "../../../components/RattingStars";
 
 const SingleProducts = () => {
   const { id } = useParams();
-
+  console.log(id)
   return (
     <>
       <section className="section__container bg-[#f4e5ec] ">
