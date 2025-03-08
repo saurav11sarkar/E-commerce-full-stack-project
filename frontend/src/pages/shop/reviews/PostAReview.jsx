@@ -1,7 +1,6 @@
 import { useState } from "react";
 import { useParams } from "react-router";
 import { useSelector } from "react-redux";
-import RattingStars from "../../../components/RattingStars";
 import { useFetchProductByIdQuery } from "../../../redux/features/products/productApi";
 
 const PostAReview = ({ isModelOpen, handleClose }) => {
