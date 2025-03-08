@@ -4,6 +4,7 @@ import RattingStars from "../../../components/RattingStars";
 import { useFetchProductByIdQuery } from "../../../redux/features/products/productApi";
 import { useDispatch } from "react-redux";
 import { addToCart } from "../../../redux/features/cart/cartSlice";
+import ReviewCart from "../reviews/ReviewCart";
 
 const SingleProducts = () => {
   const { id } = useParams();
@@ -100,7 +101,7 @@ const SingleProducts = () => {
       {/* display review */}
       {/* Todo */}
       <section className="section__container" style={{ marginTop: "2rem" }}>
-        Review
+        <ReviewCart productReviews={productReviews} />
       </section>
     </>
   );
