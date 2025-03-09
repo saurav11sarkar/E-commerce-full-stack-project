@@ -9,4 +9,5 @@ export default {
   ENV: process.env.NODE_ENV,
   ROUND: process.env.SALT_ROUND,
   SECRET: process.env.JWT_SECRET,
+  STRIPE_KEY: process.env.STRIPE_KEY,
 };
