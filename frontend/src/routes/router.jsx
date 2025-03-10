@@ -7,6 +7,7 @@ import ShopPage from "../pages/shop/ShopPage";
 import SingleProducts from "../pages/shop/productDetils/SingleProducts";
 import Login from "../components/Login";
 import Register from "../components/Register";
+import PaymentSuccess from "../components/PaymentSuccess";
 
 const router = createBrowserRouter([
   {
@@ -17,16 +18,18 @@ const router = createBrowserRouter([
       { path: "/categories/:categoryName", element: <CategoryPage /> },
       { path: "/search", element: <Search /> },
       { path: "/shop", element: <ShopPage /> },
-      {path:"/shop/:id",element: <SingleProducts/>}
+      { path: "/shop/:id", element: <SingleProducts /> },
+      { path: "/success", element: <PaymentSuccess /> },
+      // {path:"/cancle",element: <div>Whan payment success!</div>},
     ],
   },
   {
-    path:"/login",
-    element:<Login/>
+    path: "/login",
+    element: <Login />,
   },
   {
-    path:"/register",
-    element:<Register/>
+    path: "/register",
+    element: <Register />,
   },
 ]);
 

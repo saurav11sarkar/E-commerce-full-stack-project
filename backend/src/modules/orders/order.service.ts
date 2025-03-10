@@ -1,22 +1,23 @@
 import config from "../../config";
-import { IOrder } from "./order.interface";
-
 import stripe from "stripe";
 import Order from "./order.model";
-import { Types } from "mongoose";
+import { IOrder, IProductOrder } from "./order.interface";
+
 const stripeInstance = new stripe(config.STRIPE_KEY as string, {
   apiVersion: "2025-02-24.acacia",
 });
 
-const createCheckout = async (payload: IOrder): Promise<{ id: string }> => {
-  const lineItems = payload.products.map((product) => ({
+const createCheckout = async (
+  products: IProductOrder[]
+): Promise<{ id: string }> => {
+  const lineItems = products.map((product) => ({
     price_data: {
       currency: "usd",
       product_data: {
-        name: product.name,
-        images: [product.image],
+        name: product.name || "Unknown Product",
+        images: product.image ? [product.image] : [],
       },
-      unit_amount: Math.round(product.price * 100),
+      unit_amount: product.price ? Math.round(product.price * 100) : 0,
     },
     quantity: product.quantity,
   }));
@@ -25,40 +26,58 @@ const createCheckout = async (payload: IOrder): Promise<{ id: string }> => {
     payment_method_types: ["card"],
     line_items: lineItems,
     mode: "payment",
-    success_url: `http://localhost:5173/success?session_id={CHECKOUT_SESSION_ID}`,
-    cancel_url: `http://localhost:5173/cancel`,
+    success_url:
+      "http://localhost:5173/success?session_id={CHECKOUT_SESSION_ID}",
+    cancel_url: "http://localhost:5173/cancel",
   });
+
+  if (!session.id) {
+    throw new Error("Stripe session creation failed");
+  }
 
   return { id: session.id };
 };
 
-const confirmPayment = async (sessionId: string) => {
-  const session = await stripeInstance.checkout.sessions.retrieve(sessionId, {
+const confirmPayment = async (session_id: string): Promise<IOrder> => {
+  const session = await stripeInstance.checkout.sessions.retrieve(session_id, {
     expand: ["line_items", "payment_intent"],
   });
 
-  const paymentIntentId = session.payment_intent?.toString();
-  if (!paymentIntentId) throw new Error("Invalid payment session");
+  if (!session.payment_intent) {
+    throw new Error("Invalid payment session");
+  }
 
+  const paymentIntentId =
+    typeof session.payment_intent === "string"
+      ? session.payment_intent
+      : session.payment_intent.id;
+
+  // const paymentIntentId = session.payment_intent?.id;
+  // console.log(paymentIntentId);
   let order = await Order.findOne({ orderId: paymentIntentId });
+
   if (!order) {
-    const lineItems = session.line_items?.data.map((item) => ({
-      productId: new Types.ObjectId(item.price?.product?.toString() || ""),
-      quantity: item.quantity ?? 1,
-    }));
+    const lineItems =
+      session.line_items?.data.map((item) => ({
+        productId: item.price?.product?.toString() || "",
+        quantity: item.quantity ?? 1,
+      })) || [];
+
     const amount = (session.amount_total ?? 0) / 100;
     order = new Order({
       orderId: paymentIntentId,
       amount,
       products: lineItems,
-      email: session.customer_details?.email ?? "",
+      email: session.customer_details?.email || "",
       status: session.payment_status === "paid" ? "pending" : "failed",
     });
   } else {
     order.status = session.payment_status === "paid" ? "pending" : "failed";
   }
+
   await order.save();
   return order;
 };
 
 export const orderService = { createCheckout, confirmPayment };
+
