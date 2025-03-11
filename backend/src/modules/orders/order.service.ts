@@ -79,5 +79,11 @@ const confirmPayment = async (session_id: string): Promise<IOrder> => {
   return order;
 };
 
-export const orderService = { createCheckout, confirmPayment };
+const getEmail = async (email: string) => {
+  if (!email) throw new Error("Email is requried");
+  const order = await Order.find({ email });
+  if (order.length === 0 && !order) throw new Error("No order in this email");
+  return order;
+};
 
+export const orderService = { createCheckout, confirmPayment, getEmail };

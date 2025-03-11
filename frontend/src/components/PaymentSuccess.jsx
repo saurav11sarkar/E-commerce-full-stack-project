@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { getBaseUrl } from "../utils/baseUrl";
+import TimeLineStep from "./TimeLineStep";
 
 const PaymentSuccess = () => {
   const [order, setOrder] = useState(null);
@@ -21,21 +22,101 @@ const PaymentSuccess = () => {
     }
   }, []);
 
-  console.log("order", order);
+  if (!order) {
+    return (
+      <div style={{ textAlign: "center", padding: "20px" }}>Loding...</div>
+    );
+  }
+
+  const isCompleted = (status) => {
+    const statuses = [
+      "pending",
+      "processing",
+      "shipped",
+      "completed",
+      "failed",
+    ];
+    return statuses.indexOf(status) < statuses.indexOf(order.status);
+  };
+
+  const isCurrent = (status) => order.status === status;
+
+  const steps = [
+    {
+      status: "pending",
+      label: "Pending",
+      description: "Your order has been created and is awaiting processing.",
+      icon: {
+        iconName: "time-line",
+        bgColor: "red-500",
+        textColor: "gray-800",
+      },
+    },
+    {
+      status: "processing",
+      label: "Processing",
+      description: "Your order is currently being processed.",
+      icon: {
+        iconName: "loader-line",
+        bgColor: "yellow-800",
+        textColor: "yellow-800",
+      },
+    },
+    {
+      status: "shipped",
+      label: "Shipped",
+      description: "Your order has been shipped.",
+      icon: {
+        iconName: "truck-line",
+        bgColor: "blue-800",
+        textColor: "blue-800",
+      },
+    },
+    {
+      status: "completed",
+      label: "Completed",
+      description: "Your order has been successfully completed.",
+      icon: {
+        iconName: "check-line",
+        bgColor: "green-800",
+        textColor: "green-900",
+      },
+    },
+    // {
+    //   status: "failed",
+    //   label: "Failed",
+    //   description: "Your order has been Failed.",
+    //   icon: {
+    //     iconName: "check-line",
+    //     bgColor: "red-800",
+    //     textColor: "white-900",
+    //   },
+    // },
+  ];
 
   return (
-    <div style={{ textAlign: "center", padding: "20px" }}>
-      {/* {loading && <p>Loading...</p>}
-      {error && <p style={{ color: "red" }}>{error}</p>} */}
-      {order && (
-        <div>
-          <h2>Payment Successful! 🎉</h2>
-          <p>Order ID: {order.orderId}</p>
-          <p>Total Amount: ${order.amount}</p>
-          <p>Thank you for your purchase!</p>
-        </div>
-      )}
-    </div>
+    <section style={{ padding: "24px" }} className="section__container rounded">
+      <h2 style={{ marginBottom: "16px" }} className="text-2xl font-semibold">
+        Payment {order?.status}
+      </h2>
+      <p style={{ marginBottom: "16px" }}>Order Id: {order?.orderId}</p>
+      <p style={{ marginBottom: "32px" }}>Status: {order?.status}</p>
+
+      <ol className="sm:flex items-center relative">
+        {steps.map((step, index) => (
+          <TimeLineStep
+            key={index}
+            order={order}
+            step={step}
+            isCompleted={isCompleted(step.status)}
+            isCurrent={isCurrent(step.status)}
+            isLastStep={index === step.length - 1}
+            icon={step.icon}
+            description={step.description}
+          />
+        ))}
+      </ol>
+    </section>
   );
 };
 

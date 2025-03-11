@@ -17,7 +17,13 @@ const confirmPayment = catchAsycn(async (req, res) => {
   sendResponse(res, 200, "Order payment confirmed successfully", result);
 });
 
+const getEmail = catchAsycn(async (req, res) => {
+  const result = await orderService.getEmail(req.params.email);
+  sendResponse(res, 200, "Get this email Order", result);
+});
+
 export const orderController = {
   createChackOut,
   confirmPayment,
+  getEmail,
 };
