@@ -4,8 +4,12 @@ const router = express.Router();
 
 router.post("/create-chackout-session", orderController.createChackOut);
 router.post("/confirm-payment", orderController.confirmPayment);
-// get order by email address
+
 router.get("/:email", orderController.getEmail);
-// get order by id
+router.get("/order/:id", orderController.getOrderById);
+// auth("admin"),
+router.get("/", orderController.getAllOrders);
+router.patch("/update-order-status/:id", orderController.updatedOrder);
+router.delete("/order-order/:id", orderController.deletedOrder);
 
 export const orderRouter = router;

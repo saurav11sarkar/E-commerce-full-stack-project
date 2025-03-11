@@ -1,4 +1,4 @@
-import { model, Schema, Types } from "mongoose";
+import { model, Schema } from "mongoose";
 import { IOrder } from "./order.interface";
 
 const orderSchema = new Schema<IOrder>(
@@ -22,5 +22,4 @@ const orderSchema = new Schema<IOrder>(
 );
 
 const Order = model<IOrder>("Order", orderSchema);
-
 export default Order;

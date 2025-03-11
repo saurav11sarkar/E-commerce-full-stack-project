@@ -22,8 +22,34 @@ const getEmail = catchAsycn(async (req, res) => {
   sendResponse(res, 200, "Get this email Order", result);
 });
 
+const getOrderById = catchAsycn(async (req, res) => {
+  const result = await orderService.getOrderById(req.params.id);
+  sendResponse(res, 200, "Get the order", result);
+});
+
+const getAllOrders = catchAsycn(async (req, res) => {
+  const result = await orderService.getAllOrders();
+  sendResponse(res, 200, "Get all order", result);
+});
+
+const updatedOrder = catchAsycn(async (req, res) => {
+  const { id } = req.params;
+  const { status } = req.body;
+  const result = await orderService.updatedOrder(id, status);
+  sendResponse(res, 200, "Updated status is successfuly", result);
+});
+
+const deletedOrder = catchAsycn(async (req, res) => {
+  const result = await orderService.deletedOrder(req.params.id);
+  sendResponse(res, 200, "order is deleted is successfully", result);
+});
+
 export const orderController = {
   createChackOut,
   confirmPayment,
   getEmail,
+  getOrderById,
+  getAllOrders,
+  updatedOrder,
+  deletedOrder,
 };

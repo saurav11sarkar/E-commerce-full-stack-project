@@ -86,4 +86,44 @@ const getEmail = async (email: string) => {
   return order;
 };
 
-export const orderService = { createCheckout, confirmPayment, getEmail };
+const getOrderById = async (id: string) => {
+  const order = await Order.findById(id);
+  if (!order) throw new Error("Id is not found");
+  return order;
+};
+
+const getAllOrders = async () => {
+  const result = await Order.find().sort({ createdAt: -1 });
+  if (result.length === 0) throw new Error("No order found");
+  return result;
+};
+
+const updatedOrder = async (id: string, status: string) => {
+  if (!status) throw new Error("Status is requried");
+  const updatedOrder = await Order.findByIdAndUpdate(
+    id,
+    { status, updatedAt: new Date() },
+    {
+      new: true,
+      runValidators: true,
+    }
+  );
+  if (!updatedOrder) throw new Error("Order is not updeted");
+  return updatedOrder;
+};
+
+const deletedOrder = async (id: string) => {
+  const result = await Order.findByIdAndDelete(id);
+  if (!result) throw new Error("Order is not found");
+  return result;
+};
+
+export const orderService = {
+  createCheckout,
+  confirmPayment,
+  getEmail,
+  getOrderById,
+  getAllOrders,
+  updatedOrder,
+  deletedOrder,
+};
