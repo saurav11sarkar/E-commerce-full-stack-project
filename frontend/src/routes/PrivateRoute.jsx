@@ -1,17 +1,18 @@
-import React from 'react';
-import { useSelector } from 'react-redux';
-import { Navigate, useLocation } from 'react-router';
+import React from "react";
+import { useSelector } from "react-redux";
+import { Navigate, useLocation } from "react-router";
 
 const PrivateRoute = ({ children, role }) => {
-  const { user } = useSelector((state) => state.auth);
+  const { data } = useSelector((state) => state.auth);
   const location = useLocation();
+  // console.log(data);
 
-  if (!user) {
+  if (!data) {
     alert("You must be logged in!");
     return <Navigate to="/login" state={{ from: location }} replace />;
   }
 
-  if (role && user.role !== role) {
+  if (role && data.role !== role) {
     alert("Access denied!");
     return <Navigate to="/login" state={{ from: location }} replace />;
   }

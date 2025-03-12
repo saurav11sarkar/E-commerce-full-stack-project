@@ -8,6 +8,8 @@ import SingleProducts from "../pages/shop/productDetils/SingleProducts";
 import Login from "../components/Login";
 import Register from "../components/Register";
 import PaymentSuccess from "../components/PaymentSuccess";
+import DashbordLayout from "../pages/dashbord/DashbordLayout";
+import PrivateRoute from "./PrivateRoute";
 
 const router = createBrowserRouter([
   {
@@ -20,7 +22,6 @@ const router = createBrowserRouter([
       { path: "/shop", element: <ShopPage /> },
       { path: "/shop/:id", element: <SingleProducts /> },
       { path: "/success", element: <PaymentSuccess /> },
-      // {path:"/cancle",element: <div>Whan payment success!</div>},
     ],
   },
   {
@@ -30,6 +31,73 @@ const router = createBrowserRouter([
   {
     path: "/register",
     element: <Register />,
+  },
+  // dashBord satrs
+  {
+    path: "/dashboard",
+    element: (
+      <PrivateRoute>
+        <DashbordLayout />
+      </PrivateRoute>
+    ), //use privet routes
+    children: [
+      // user routes
+      { path: "", element: <div>User dahsbord</div> },
+      { path: "orders", element: <div>User orders</div> },
+      { path: "payments", element: <div>User payments</div> },
+      { path: "profile", element: <div>User profile</div> },
+      { path: "reviews", element: <div>User reviews</div> },
+
+      // admin routes include role filed
+      {
+        path: "admin",
+        element: (
+          <PrivateRoute role={"admin"}>
+            <div>Admin Main</div>
+          </PrivateRoute>
+        ),
+      },
+      {
+        path: "add-new-post",
+        element: (
+          <PrivateRoute role={"admin"}>
+            <div>New Post</div>
+          </PrivateRoute>
+        ),
+      },
+      {
+        path: "manage-products",
+        element: (
+          <PrivateRoute role={"admin"}>
+            <div>Manage Post</div>
+          </PrivateRoute>
+        ),
+      },
+      {
+        path: "update-product/:id",
+        element: (
+          <PrivateRoute role={"admin"}>
+            <div>Update post</div>
+          </PrivateRoute>
+        ),
+      },
+      {
+        path: "users",
+        element: (
+          <PrivateRoute role={"admin"}>
+            <div>All Users</div>
+          </PrivateRoute>
+        ),
+      },
+      {
+        path: "manage-orders",
+        element: (
+          <PrivateRoute role={"admin"}>
+            <div>Manage order</div>
+          </PrivateRoute>
+        ),
+      },
+    ],
   },
 ]);
 
