@@ -10,6 +10,6 @@ router.get("/order/:id", orderController.getOrderById);
 // auth("admin"),
 router.get("/", orderController.getAllOrders);
 router.patch("/update-order-status/:id", orderController.updatedOrder);
-router.delete("/order-order/:id", orderController.deletedOrder);
+router.delete("/delete-order/:id", orderController.deletedOrder);
 
 export const orderRouter = router;
