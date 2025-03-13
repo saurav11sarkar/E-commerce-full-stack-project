@@ -13,7 +13,7 @@ const PrivateRoute = ({ children, role }) => {
   }
 
   if (role && data.role !== role) {
-    alert("Access denied!");
+    alert("You are not authorized to access this page!");
     return <Navigate to="/login" state={{ from: location }} replace />;
   }
 

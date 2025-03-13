@@ -10,6 +10,7 @@ import Register from "../components/Register";
 import PaymentSuccess from "../components/PaymentSuccess";
 import DashbordLayout from "../pages/dashbord/DashbordLayout";
 import PrivateRoute from "./PrivateRoute";
+import UserDMain from "../pages/dashbord/users/dashbord/UserDMain";
 
 const router = createBrowserRouter([
   {
@@ -42,7 +43,7 @@ const router = createBrowserRouter([
     ), //use privet routes
     children: [
       // user routes
-      { path: "", element: <div>User dahsbord</div> },
+      { path: "", element: <UserDMain /> },
       { path: "orders", element: <div>User orders</div> },
       { path: "payments", element: <div>User payments</div> },
       { path: "profile", element: <div>User profile</div> },
