@@ -110,6 +110,7 @@ const Navbar = () => {
                   onClick={handleDropDownToggole}
                   src={user?.profileImage || avaterImg}
                   alt={user?.username}
+                  style={{ width: "24px", height: "24px" }}
                   className="w-6 h-6 rounded-full cursor-pointer"
                 />
                 {isDropdown && (

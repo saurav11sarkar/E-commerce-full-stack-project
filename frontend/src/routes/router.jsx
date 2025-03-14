@@ -13,6 +13,9 @@ import PrivateRoute from "./PrivateRoute";
 import UserDMain from "../pages/dashbord/users/dashbord/UserDMain";
 import UserOrders from "../pages/dashbord/users/UserOrders";
 import OrderDetails from "../pages/dashbord/users/OrderDetails";
+import UserPayment from "../pages/dashbord/users/UserPayment";
+import UserReviews from "../pages/dashbord/users/UserReviews";
+import UserProfile from "../pages/dashbord/users/UserProfile";
 
 const router = createBrowserRouter([
   {
@@ -25,7 +28,7 @@ const router = createBrowserRouter([
       { path: "/shop", element: <ShopPage /> },
       { path: "/shop/:id", element: <SingleProducts /> },
       { path: "/success", element: <PaymentSuccess /> },
-      { path: "/orders/:orderId", element: <OrderDetails/> },
+      { path: "/orders/:orderId", element: <OrderDetails /> },
     ],
   },
   {
@@ -48,9 +51,9 @@ const router = createBrowserRouter([
       // user routes
       { path: "", element: <UserDMain /> },
       { path: "orders", element: <UserOrders /> },
-      { path: "payments", element: <div>User payments</div> },
-      { path: "profile", element: <div>User profile</div> },
-      { path: "reviews", element: <div>User reviews</div> },
+      { path: "payments", element: <UserPayment /> },
+      { path: "profile", element: <UserProfile /> },
+      { path: "reviews", element: <UserReviews /> },
 
       // admin routes include role filed
       {
