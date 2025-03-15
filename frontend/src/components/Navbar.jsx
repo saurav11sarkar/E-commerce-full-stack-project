@@ -32,7 +32,7 @@ const Navbar = () => {
     { lable: "Dashbord", path: "/dashboard/admin" },
     { lable: "Manage Items", path: "/dashboard/manage-products" },
     { lable: "All Order", path: "/dashboard/manage-orders" },
-    { lable: "All new Post", path: "/dashboard/add-new-post" },
+    { lable: "Add Product", path: "/dashboard/add-product" },
   ];
 
   // user dropdown menu

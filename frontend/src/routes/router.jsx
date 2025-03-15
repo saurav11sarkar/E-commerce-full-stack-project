@@ -16,6 +16,8 @@ import OrderDetails from "../pages/dashbord/users/OrderDetails";
 import UserPayment from "../pages/dashbord/users/UserPayment";
 import UserReviews from "../pages/dashbord/users/UserReviews";
 import UserProfile from "../pages/dashbord/users/UserProfile";
+import AdminDMain from "../pages/dashbord/admin/dashboard/AdminDMain";
+import AddProduct from "../pages/dashbord/admin/addProduct/AddProduct";
 
 const router = createBrowserRouter([
   {
@@ -60,15 +62,15 @@ const router = createBrowserRouter([
         path: "admin",
         element: (
           <PrivateRoute role={"admin"}>
-            <div>Admin Main</div>
+            <AdminDMain/>
           </PrivateRoute>
         ),
       },
       {
-        path: "add-new-post",
+        path: "add-product",
         element: (
           <PrivateRoute role={"admin"}>
-            <div>New Post</div>
+            <AddProduct/>
           </PrivateRoute>
         ),
       },
