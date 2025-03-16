@@ -3,6 +3,7 @@ import cors from "cors";
 import config from "./config";
 import cookiesParser from "cookie-parser";
 import router from "./router/routes";
+import { uploadImage } from "./utils/uploadImage";
 
 const app = express();
 app.use(express.json({ limit: "25mb" }));
@@ -26,6 +27,12 @@ app.get("/", (req: Request, res: Response) => {
     .send(
       '<h2 style="text-align: center; color: red;">Server is running 🦞</h2>'
     );
+});
+
+app.post("/uploadImage", (req: Request, res: Response) => {
+  uploadImage(req.body.image)
+    .then((url) => res.send(url))
+    .catch((err) => res.status(500).send(err));
 });
 
 app.use((req: Request, res: Response, next: NextFunction) => {

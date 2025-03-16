@@ -12,7 +12,7 @@ const AdminStats = ({ stats }) => {
           <h2 style={{ marginBottom: "8px" }} className="text-xl font-semibold">
             Total Earning
           </h2>
-          <p className="text-2xl font-bold">{stats?.totalEarning}</p>
+          <p className="text-2xl font-bold">{stats?.totalEarning.toFixed(2)}</p>
         </div>
 
         <div
