@@ -63,16 +63,16 @@ const UpdateUserModel = ({ user, onClose, onRoleUpdate }) => {
           </select>
         </div>
 
-        <div style={{paddingTop:"20px"}} className="flex justify-end">
+        <div style={{ paddingTop: "20px" }} className="flex justify-end">
           <button
-          onClick={onClose}
+            onClick={onClose}
             style={{ padding: "8px 16px", marginRight: "8px" }}
             className="bg-primary text-white rounded"
           >
             Cancel
           </button>
           <button
-          onClick={handleUpdateRole}
+            onClick={handleUpdateRole}
             style={{ padding: "8px 16px", marginRight: "8px" }}
             className="bg-indigo-500 text-white rounded"
           >

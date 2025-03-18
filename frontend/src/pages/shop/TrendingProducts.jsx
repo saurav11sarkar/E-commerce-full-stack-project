@@ -1,12 +1,20 @@
 import { useState } from "react";
 import ProductCarts from "./ProductCarts";
-import products from "../../data/products.json";
+import { useFetchAllProductsQuery } from "../../redux/features/products/productApi";
 
 const TrendingProducts = () => {
   const [visibleProducts, setVisibleProducts] = useState(8);
+  const { data, isLoading, error } = useFetchAllProductsQuery({
+    limit: visibleProducts,
+  });
+  const products = data?.data?.products || [];
+  const totalProducts = data?.data?.totalProducts || 0;
+
   const loadmorProducts = () => {
     setVisibleProducts((prevCart) => prevCart + 4);
   };
+  if (isLoading) return <div>Loading...</div>;
+  if (error) return <div>Somthing want worng</div>;
   return (
     <section className="section__container product__container">
       <h2 className="section__header">Trending Products</h2>
@@ -17,12 +25,12 @@ const TrendingProducts = () => {
 
       {/* product carts */}
       <div className="section__margin">
-        <ProductCarts products={products.slice(0,visibleProducts)} />
+        <ProductCarts products={products.slice(0, visibleProducts)} />
       </div>
 
       {/* loard more products */}
       <div className="product__btn">
-        {visibleProducts < products.length && (
+        {visibleProducts < totalProducts && (
           <button className="btn" onClick={loadmorProducts}>
             Load More
           </button>

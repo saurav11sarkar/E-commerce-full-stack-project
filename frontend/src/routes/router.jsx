@@ -21,6 +21,7 @@ import AddProduct from "../pages/dashbord/admin/addProduct/AddProduct";
 import ManageProduct from "../pages/dashbord/admin/manageProduct/ManageProduct";
 import UpdatedProduct from "../pages/dashbord/admin/manageProduct/UpdatedProduct";
 import ManageUser from "../pages/dashbord/admin/users/ManageUser";
+import ManageOrder from "../pages/dashbord/admin/manageOrder/ManageOrder";
 
 const router = createBrowserRouter([
   {
@@ -105,7 +106,7 @@ const router = createBrowserRouter([
         path: "manage-orders",
         element: (
           <PrivateRoute role={"admin"}>
-            <div>Manage order</div>
+            <ManageOrder />
           </PrivateRoute>
         ),
       },

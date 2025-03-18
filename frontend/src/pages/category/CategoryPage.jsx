@@ -1,21 +1,29 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router";
-import products from "../../data/products.json";
 import ProductCarts from "../shop/ProductCarts";
+import { useFetchAllProductsQuery } from "../../redux/features/products/productApi";
 
 const CategoryPage = () => {
   const { categoryName } = useParams();
+  console.log(categoryName);
   const [filterProducts, setFilterProducts] = useState([]);
+  const { data, isLoading, error } = useFetchAllProductsQuery({
+    category: categoryName,
+  });
+  const products = data?.data?.products || [];
   useEffect(() => {
     const filtered = products.filter(
       (product) => product.category === categoryName.toLowerCase()
     );
     setFilterProducts(filtered);
-  }, [categoryName]);
+  }, [categoryName, data]);
 
-  useEffect(()=>{
-    window.scrollTo(0,0)
-  },[])
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
+  if (isLoading) return <div>Loading...</div>;
+  if (error) return <div>something to worng</div>;
   return (
     <>
       <section className="section__container bg-[#f4e5ec] ">
@@ -28,7 +36,7 @@ const CategoryPage = () => {
       {/* products card */}
 
       <div className="section__container">
-        <ProductCarts products={filterProducts}/>
+        <ProductCarts products={filterProducts} />
       </div>
     </>
   );

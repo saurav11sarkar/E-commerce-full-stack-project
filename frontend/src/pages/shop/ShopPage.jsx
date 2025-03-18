@@ -127,7 +127,7 @@
 // export default ShopPage;
 
 import { useState } from "react";
-import productsData from "../../data/products.json";
+// import productsData from "../../data/products.json";
 import ProductCarts from "./ProductCarts";
 import ShopFiltering from "./ShopFiltering";
 import { useFetchAllProductsQuery } from "../../redux/features/products/productApi";

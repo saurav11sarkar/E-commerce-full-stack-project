@@ -137,8 +137,15 @@ const ManageUser = () => {
                           style={{ padding: "16px 24px" }}
                           className="border-t-0 px-6 align-center border-l-0 border-r-0 text-xs whitespace-nowrap p-4"
                         >
-                          <span style={{padding:"2px 12px"}} className={`rounded-full ${user?.role === "admin"? "bg-indigo-500 text-white":"bg-amber-300 text-white"}`}>
-                          {user?.role || "N/A"}
+                          <span
+                            style={{ padding: "2px 12px" }}
+                            className={`rounded-full ${
+                              user?.role === "admin"
+                                ? "bg-indigo-500 text-white"
+                                : "bg-amber-300 text-white"
+                            }`}
+                          >
+                            {user?.role || "N/A"}
                           </span>
                         </td>
                         <td
