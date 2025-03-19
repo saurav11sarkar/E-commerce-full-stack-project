@@ -27,8 +27,8 @@ const createCheckout = async (
     line_items: lineItems,
     mode: "payment",
     success_url:
-      "http://localhost:5173/success?session_id={CHECKOUT_SESSION_ID}",
-    cancel_url: "http://localhost:5173/cancel",
+      "https://ecommerce-fortend.vercel.app/success?session_id={CHECKOUT_SESSION_ID}",
+    cancel_url: "https://ecommerce-fortend.vercel.app/cancel",
   });
 
   if (!session.id) {
